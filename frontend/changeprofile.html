@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Change Profile</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="changeprofile.js"></script>
+</head>
+<body>
+    <h1>Change Profile</h1>
+    <form id="changeProfileForm" action="api/changeprofile.php" method="POST">
+        <input type="text" name="firstname" placeholder="First Name" required><br>
+        <input type="text" name="lastname" placeholder="Last Name" required><br>
+        <input type="email" name="email" placeholder="Email" required><br>
+        <input type="date" name="birthdate" required><br>
+        <input type="submit" value="Save Changes">
+    </form>
+    <div id="message"></div>
+</body>
+
+</html>

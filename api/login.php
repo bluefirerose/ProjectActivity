@@ -1,8 +1,6 @@
-<!-- Endpoint for user login and session management. -->
-
 <?php
 
-include "connect.php";
+include "config.php";
 
 // Check if the request is a POST request
 if($_SERVER['REQUEST_METHOD'] === 'POST'){

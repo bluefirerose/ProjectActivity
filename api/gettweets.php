@@ -1,27 +1,28 @@
 <?php
+require_once 'config.php';
 
-include "connect.php";
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    // Prepare and execute the SQL statement to fetch tweets
+    $stmt = $conn->prepare("SELECT t.id, t.content, t.date_tweeted, u.firstname, u.lastname FROM tweets t JOIN users u ON t.user_id = u.id ORDER BY t.date_tweeted DESC");
+    $stmt->execute();
+    $stmt->bind_result($tweet_id, $content, $date_tweeted, $firstname, $lastname);
 
-$id = $_GET['id'];
+    $tweets = array();
 
-$sql = "SELECT * FROM users WHERE id = '$id'";
+    while ($stmt->fetch()) {
+        $tweet = array(
+            'id' => $tweet_id,
+            'content' => $content,
+            'date_tweeted' => $date_tweeted,
+            'firstname' => $firstname,
+            'lastname' => $lastname
+        );
+        $tweets[] = $tweet;
+    }
 
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
+    // Return the fetched tweets
+    echo json_encode($tweets);
 
-$user = array(
-    'id' => $row['id'],
-    'email' => $row['email'],
-    'firstname' => $row['firstname'],
-    'lastname' => $row['lastname'],
-    'birthdate' => $row['birthdate'],
-);
-
-$response = array(
-    'success' => true,
-    'user' => $user
-);
-
-echo json_encode($response);
-
+    $stmt->close();
+}
 ?>
