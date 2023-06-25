@@ -1,0 +1,1 @@
+<!-- Endpoint for changing the user's password. -->
