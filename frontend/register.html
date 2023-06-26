@@ -26,9 +26,48 @@
             <a href="login.html" class="ms-3 align-middle">I already have an account</a>
         </form>
     </section>
-    <script src="api.js"></script>
-    <script>
-      checkSession();
+    <script>  
+        const registrationForm = document.querySelector("#registrationForm");
+        registrationForm.addEventListener("submit",register);
+
+        function register(event){
+            event.preventDefault();
+
+            const email = document.querySelector("#email").value;
+            const firstname = document.querySelector("#firstname").value;
+            const lastname = document.querySelector("#lastname").value;
+            const birthdate = document.querySelector("#birthdate").value;
+            const password = document.querySelector("#password").value;
+            const confirm_password = document.querySelector("#confirm_password").value;
+
+            if(password === confirm_password){
+                fetch("http://localhost/ProjectActivity/api/register.php", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        firstname: firstname,
+                        lastname: lastname,
+                        birthdate: birthdate,
+                        password: password
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success){
+                        alert("Registration successful!");
+                    } else {
+                        alert("Email already exists!");
+                    }
+                
+                });
+            }else {
+                alert("Passwords do not match!");
+            }
+
+        };
     </script>
 </body>
 </html>
